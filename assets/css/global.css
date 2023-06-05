@@ -1,0 +1,16 @@
+:root {
+    --main-black: #141414;
+    --sub-black:#0F0F11;
+    --red-one: #D00928;
+    --main-font: 'Saira', sans-serif;
+    --bold: 700;
+    --semibold: 600;
+    --medium: 500;
+    --regular: 400;
+    --light:200;
+    --extrabold: 800;
+    --blackbold: 900;
+}
+body {
+    font-family: var(--main-font);
+}
