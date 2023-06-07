@@ -257,6 +257,10 @@ ul.bullet-ul li:after {
 }
 
 
+
+/******************************* footer start ************************************/
+
+
 .footer-sec{
     background-color: var(--black-footer);
 }
@@ -328,6 +332,9 @@ ul.bullet-ul li:after {
     text-decoration: none;
     padding: 0px 10px;
 }
+
+
+/******************************* footer end ************************************/
 
 
 
