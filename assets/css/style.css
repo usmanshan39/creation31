@@ -565,16 +565,17 @@ ul.bullet-ul li:after {
     }
 
     .home-about .right-sec {
-        padding: 40px;
+        padding: 25px;
     }
 
     .what-we-do .bullet-img {
         width: 63% !important;
     }
     .contact-us-sec .form-sec{
-        width: 85%;
+        width: 95%;
         position: inherit;
         margin-top: -30%;
+        padding: 25px;
     }
     .contact-us-sec{
         background-image: none;
@@ -615,6 +616,13 @@ ul.bullet-ul li:after {
     .about-counter .light-card img{
         width: 40px;
         height: 40px;
+    }
+    .meet-dream-sec .tabs-sec .nav .nav-item .nav-link{
+        font-size: 12px;
+    }
+    .footer-sec .footer-top .golden-btn{
+        position: initial;
+        width: 100%;
     }
 }
 
