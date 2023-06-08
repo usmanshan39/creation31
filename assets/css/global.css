@@ -8,7 +8,7 @@
     --italic-font: 'Herr Von Muellerhoff', cursive;
 }
 .text-gold{
-    color: var(--main-golden);
+    color: var(--main-golden) !important;
 }
 .bg-gold{
     background-color: var(--main-golden);
@@ -108,6 +108,18 @@
 .bold-text{
     font-weight: 700;
 }
+.bg-black-overlay{
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.inherit-sec{
+    position: inherit;
+    z-index: 99
+}
 
 /******************************* Global Header start  ************************************/
 
@@ -150,6 +162,7 @@
     font-size: 15px;
     font-weight: 400;
     padding: 5px 20px;
+    text-transform: uppercase;
 }
 .global-header .navbar .navbar-nav .nav-item .nav-link.active{
     color: var(--main-golden);

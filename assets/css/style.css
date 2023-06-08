@@ -5,6 +5,12 @@
     background-repeat: no-repeat;
     padding: 220px 0px;
 }
+.page-header.services{
+    background-image: url("../images/services-head-bg.jpeg");
+}
+.page-header.about-us{
+    background-image: url("../images/about-us-bg.jpeg");
+}
 
 .page-header .p-line {
     display: flex;
@@ -40,14 +46,36 @@
     color: var(--main-golden);
 }
 
+.page-header .head-ul{
+    list-style-type: none;
+    padding-left: 0px;
+    display: inline-flex;
+}
+.page-header .head-ul li a{
+    font-size: 20px;
+    font-family: Poppins;
+    font-weight: 400;
+    color: var(--black-b);
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 .home-about .left-img2 {
     margin-top: 90px;
 }
 
+.home-about.services .left-img2 {
+    margin-top: 0px;
+}
+
 .home-about .right-sec {
     background-color: var(--bg-light);
     padding: 70px;
+}
+
+.home-about.services .right-sec {
+    background-color: transparent;
+    padding: 40px;
 }
 
 .home-about .right-sec .bold-one {
@@ -257,6 +285,185 @@ ul.bullet-ul li:after {
 }
 
 
+.meet-dreams-sec .even-sec{
+    background-color: #F9F9F9;
+}
+.meet-dreams-sec .even-sec,
+.meet-dreams-sec .odd-sec{
+    padding: 40px 0px;
+}
+
+
+.meet-dreams-sec .acc-sec .accordion-item{
+    margin-bottom: 10px;
+    border: none;
+}
+
+.meet-dreams-sec .acc-sec .accordion-button{
+    border: 1px solid #D9D9D9 !important;
+    font-family: Poppins;
+    font-size: 20px;
+    color: #000;
+    box-shadow: none;
+}
+.meet-dreams-sec .acc-sec .accordion-button:not(.collapsed){
+    color: #000;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+
+.about-vision .plan-icon{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: fit-content;
+    margin: auto;
+    height: fit-content;
+}
+
+.about-vision .plan-icon .inner-div{
+    background-color: #fff;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 16px 0px rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.about-vision .plan-icon .inner-div img{
+    width: 64px;
+}
+
+.about-counter{
+    position: relative;
+    background-image: url("../images/about-vision-bg.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 170px 0px;
+}
+
+.about-counter .light-card{
+    width: 100%;
+    background-color: rgb(255, 255, 255 , 0.2);
+    padding: 30px 50px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+.about-counter .light-card h1{
+    font-size: 48px;
+    font-family: Poppins;
+    font-weight: 400;
+    color: #fff;
+}
+.about-counter .light-card p{
+    font-size: 18px;
+    font-family: Poppins;
+    font-weight: 400;
+    color: #fff;
+}
+
+.about-counter .call-sec .icon-div{
+    width: 96px;
+    height: 96px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 25px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+.about-counter .call-sec .icon-div i{
+    font-size: 50px;
+    color: var(--main-golden);
+}
+.about-counter .call-sec .ligt-p{
+    font-size: 20px;
+    color: #fff;
+    font-family: Poppins;
+    font-weight: 400;
+}
+.about-counter .call-sec .num-p{
+    font-size: 35px;
+    color: #fff;
+    font-family: Poppins;
+    font-weight: 700;
+}
+
+
+.proff-skills .left-sec{
+    position: relative;
+    background-image: url("../images/professional-skills-bg.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 100px 0px;
+}
+.proff-skills .left-sec .inner-sec{
+    padding: 30px;
+}
+.proff-skills .left-sec .progress-sec .progress{
+    height: 5px;
+}
+.proff-skills .left-sec .progress-sec .progress-bar{
+    background-color: var(--main-golden);
+}
+
+.proff-skills .right-sec{
+    background-image: url("../images/skills-test-bg.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 100px;
+}
+
+.proff-skills .right-sec .testimonial-sec .writter-img{
+    width: 80px !important;
+}
+.proff-skills .right-sec h6,
+.proff-skills .right-sec h1,
+.proff-skills .right-sec p{
+    color: #fff;
+}
+.proff-skills .right-sec .testimonial-sec .writter-name,
+.proff-skills .right-sec .testimonial-sec .writter-post{
+    font-size: 18px;
+    font-weight: Poppins;
+    color: #fff;
+}
+.proff-skills .right-sec .testimonial-sec .owl-dots{
+    float: right;
+}
+.proff-skills .right-sec .testimonial-sec .owl-dot{
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 255, 255 , 0.5);
+    margin: 0px 5px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+.proff-skills .right-sec .testimonial-sec .owl-dot.active{
+    background-color: rgb(255, 255, 255 , 1);
+}
 
 /******************************* footer start ************************************/
 
@@ -372,6 +579,43 @@ ul.bullet-ul li:after {
     .contact-us-sec{
         background-image: none;
     }
+    .about-vision .plan-icon .inner-div{
+        width: 65px;
+        height: 65px;
+    }
+    .about-vision .plan-icon .inner-div img{
+        width: 35px;
+    }
+    .about-counter{
+        padding: 90px 0px;
+    }
+    .about-counter .call-sec .icon-div{
+        width: 70px;
+        height: 70px;
+    }
+    .about-counter .call-sec .icon-div i{
+        font-size: 40px;
+    }
+    .about-counter .call-sec .ligt-p{
+        margin-bottom: 0px;
+        font-size: 14px;
+    }
+    .about-counter .call-sec .num-p{
+        font-size: 24px;
+    }
+    .about-counter .light-card{
+        padding: 12px;
+    }
+    .about-counter .light-card p{
+        font-size: 12px;
+    }
+    .about-counter .light-card h1{
+        font-size: 30px;
+    }
+    .about-counter .light-card img{
+        width: 40px;
+        height: 40px;
+    }
 }
 
 
@@ -402,6 +646,19 @@ ul.bullet-ul li:after {
     }
     .contact-us-sec{
         background-image: none;
+    }
+    .about-vision .plan-icon .inner-div{
+        width: 80px;
+        height: 80px;
+    }
+    .about-vision .plan-icon .inner-div img{
+        width: 45px;
+    }
+    .about-counter{
+        padding: 90px 0px;
+    }
+    .about-counter .light-card{
+        padding: 30px 30px;
     }
 }
 
@@ -434,6 +691,19 @@ ul.bullet-ul li:after {
     .contact-us-sec{
         background-image: none;
     }
+    .about-vision .plan-icon .inner-div{
+        width: 80px;
+        height: 80px;
+    }
+    .about-vision .plan-icon .inner-div img{
+        width: 45px;
+    }
+    .about-counter{
+        padding: 90px 0px;
+    }
+    .about-counter .light-card{
+        padding: 30px 30px;
+    }
 }
 
 @media(min-width:991px) AND (max-width:1200px) {
@@ -462,6 +732,19 @@ ul.bullet-ul li:after {
     }
     .contact-us-sec .form-sec{
         width: 55%;
+    }
+    .about-vision .plan-icon .inner-div{
+        width: 95px;
+        height: 95px;
+    }
+    .about-vision .plan-icon .inner-div img{
+        width: 52px;
+    }
+    .about-counter{
+        padding: 90px 0px;
+    }
+    .about-counter .light-card{
+        padding: 30px 30px;
     }
 }
 @media (min-width:1200px) AND (max-width:1550px){
