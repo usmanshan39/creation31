@@ -13,7 +13,15 @@
 .page-header.about-us {
     background-image: url("../images/about-us-bg.jpeg");
 }
-
+.page-header.careers {
+    background-image: url("../images/careers-head-bg.jpeg");
+}
+.page-header.contact-us{
+    background-image: url("../images/contactus-sec-bg.jpeg");
+}
+.page-header.portfolio{
+    background-image: url("../images/portfolio-head-bg.jpeg");
+}
 .page-header .p-line {
     display: flex;
     align-items: center;
@@ -578,6 +586,110 @@ ul.bullet-ul li:after {
     background-color: rgb(255, 255, 255, 1);
 }
 
+
+.open-positions .left-side .bg-gold{
+    background-color: var(--main-golden);
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 80%;
+    z-index: -1;
+    bottom: 0px;
+    margin: auto;
+}
+.open-positions .right-sec .inner{
+    background-color: #F9F9F9;
+    padding: 60px 40px;
+    height: 77%;
+    margin-top: 15.5vh;
+}
+
+.contact-details-sec .gold-icon{
+    font-size: 30px;
+    color: var(--main-golden);
+}
+.contact-details-sec .head-bold{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: Poppins;
+    text-transform: uppercase;
+}
+.contact-details-sec .detail-p{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Poppins;
+    text-transform: uppercase;
+}
+.contact-page-form{
+    padding: 40px;
+    box-shadow: 0 3px 16px 0px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+}
+
+.contact-sec2{
+    margin-top: 150px;
+    background-color: #F9F9F9;
+    padding: 50px 0px;
+}
+
+.mapouter {
+    position: relative;
+    text-align: right;
+    width: 100%;
+    height: 340px;
+}
+.gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    width: 100%;
+    height: 340px;
+}
+.gmap_iframe {
+    height: 340px !important;
+}
+
+
+.portfolio-tabs .tabs-sec .nav {
+    border: none !important;
+    justify-content: center !important;
+}
+
+.portfolio-tabs .tabs-sec .nav .nav-item .nav-link {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 17px;
+    color: #000;
+    padding: 10px 40px;
+    margin: 3px;
+    border: 1px solid #000;
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -ms-border-radius: 0px !important;
+    -o-border-radius: 0px !important;
+}
+
+.portfolio-tabs .tabs-sec .nav .nav-item .nav-link.active {
+    border: 1px solid var(--main-golden);
+    color: var(--main-golden);
+    text-decoration: underline;
+}
+
+.portfolio-tabs .tabs-sec .tabs-list {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.portfolio-tabs .tabs-sec .tabs-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 0px;
+}
+
+.portfolio-tabs .tabs-sec .tabs-list li p {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+
 /******************************* footer start ************************************/
 
 
@@ -772,6 +884,17 @@ ul.bullet-ul li:after {
         padding-top: 480px;
         padding-bottom: 0px;
     }
+    .open-positions .right-sec .inner{
+        padding: 30px 20px;
+        margin-top: 0px;
+        height: 100%;
+    }
+    .contact-page-form{
+        padding: 20px;
+    }
+    .portfolio-tabs .tabs-sec .nav .nav-item .nav-link{
+        padding: 5px 20px;
+    }
 }
 @media (max-width:450px){
     .home-testimonial-sec{
@@ -834,6 +957,14 @@ ul.bullet-ul li:after {
         padding-top: 220px;
         padding-bottom: 0px;
     }
+    .open-positions .right-sec .inner{
+        margin-top: 0px;
+        padding: 30px;
+        height: 100%;
+    }
+    .portfolio-tabs .tabs-sec .nav .nav-item .nav-link{
+        padding: 5px 20px;
+    }
 }
 
 
@@ -889,6 +1020,17 @@ ul.bullet-ul li:after {
         padding-top: 300px;
         padding-bottom: 0px;
     }
+    .open-positions .right-sec .inner{
+        margin-top: 0px;
+        padding: 30px;
+        height: 100%;
+    }
+    .contact-page-form{
+        padding: 25px;
+    }
+    .portfolio-tabs .tabs-sec .nav .nav-item .nav-link{
+        padding: 6px 27px;
+    }
 }
 
 @media(min-width:991px) AND (max-width:1200px) {
@@ -940,6 +1082,16 @@ ul.bullet-ul li:after {
     .about-counter .light-card {
         padding: 30px 30px;
     }
+    .open-positions .right-sec .inner{
+        margin-top: 15vh;
+    }
+    .contact-page-form{
+        position: absolute;
+        top: -30%;
+    }
+    .border-right{
+        border-right: 1px solid #B0B0B0;
+    }
 }
 
 @media (min-width:1200px) AND (max-width:1550px) {
@@ -951,6 +1103,13 @@ ul.bullet-ul li:after {
 @media (min-width:1200px) {
     .home-services .main-start {
         padding-top: 4%;
+    }
+    .contact-page-form{
+        position: absolute;
+        top: -30%;
+    }
+    .border-right{
+        border-right: 1px solid #B0B0B0;
     }
 }
 
