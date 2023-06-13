@@ -803,6 +803,9 @@ ul.bullet-ul li:after {
     .home-about .right-sec {
         padding: 25px;
     }
+    .home-about.services .right-sec{
+        padding: 20px;
+    }
 
     .what-we-do .bullet-img {
         width: 63% !important;
@@ -895,6 +898,9 @@ ul.bullet-ul li:after {
     .portfolio-tabs .tabs-sec .nav .nav-item .nav-link{
         padding: 5px 20px;
     }
+    .proff-skills .right-sec{
+        padding: 30px;
+    }
 }
 @media (max-width:450px){
     .home-testimonial-sec{
@@ -924,6 +930,9 @@ ul.bullet-ul li:after {
 
     .home-about .right-sec {
         padding: 40px;
+    }
+    .home-about.services .right-sec{
+        padding: 30px;
     }
 
     .contact-us-sec .form-sec {
@@ -964,6 +973,9 @@ ul.bullet-ul li:after {
     }
     .portfolio-tabs .tabs-sec .nav .nav-item .nav-link{
         padding: 5px 20px;
+    }
+    .proff-skills .right-sec{
+        padding: 40px;
     }
 }
 
