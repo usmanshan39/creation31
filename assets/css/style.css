@@ -133,7 +133,7 @@ ul.bullet-ul {
 ul.bullet-ul li {
     position: relative;
     padding-left: 10px;
-    margin-bottom: 37px;
+    margin-bottom: 18px;
 }
 
 ul.bullet-ul li:before {
@@ -901,6 +901,9 @@ ul.bullet-ul li:after {
     .proff-skills .right-sec{
         padding: 30px;
     }
+    ul.bullet-ul li{
+        margin-bottom: 10px;
+    }
 }
 @media (max-width:450px){
     .home-testimonial-sec{
@@ -1109,6 +1112,24 @@ ul.bullet-ul li:after {
 @media (min-width:1200px) AND (max-width:1550px) {
     .contact-us-sec {
         margin-bottom: 14%;
+    }
+}
+
+@media (min-width:1200px) AND (max-width:1400px){
+    .global-header .navbar .navbar-logo {
+        max-width: 200px !important;
+    }
+    .page-header{
+        padding: 100px 0px;
+    }
+    .page-header.services,
+    .page-header.careers,
+    .page-header.portfolio,
+    .page-header.contact-us{
+        padding: 170px 0px;
+    }
+    .footer-top img{
+        width: 220px !important;
     }
 }
 
