@@ -781,6 +781,26 @@ ul.bullet-ul li:after {
 
 
 
+
+/* modal */
+
+.modal-content .form-sec{
+    padding: 8%;
+}
+.modal-content .btn-close{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+.modal-content .form-sec h3 {
+    font-family: var(--italic-font);
+    font-size: 58px;
+    font-weight: 400;
+    color: var(--main-golden);
+}
+
+
+
 /******************************* media quries start ************************************/
 
 @media(max-width:570px) {
