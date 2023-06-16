@@ -3,7 +3,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">YG Saloon</div>
+        <div class="sidebar-brand-text mx-3">Creation31</div>
     </a>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
@@ -11,11 +11,11 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Appointments</span></a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="blogs.php">
             <i class="fas fa-blog"></i>
             <span>Blogs</span></a>
-    </li>
+    </li> -->
     <?php 
     if($_SESSION['userType'] == "super"){
         ?>

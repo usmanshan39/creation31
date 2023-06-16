@@ -114,12 +114,12 @@
                     $phone = $row['mobile'];
 
                     $to = $email;
-                    $subject = 'Yg Saloon Appointment Reminder';
+                    $subject = 'Creation31 Appointment Reminder';
                     $headers = "From: info@ygsalon.ae\r\n";
                     $headers .= "Reply-To: info@ygsalon.ae\r\n";
                     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
                     $body = "<h2>Hi ".$name."</h2>";
-                    $body .= "<p>Your appointment for yg saloon is on data ".$row['app_date']." at time ".$row['app_time']."</p>";
+                    $body .= "<p>Your appointment for Creation31 is on data ".$row['app_date']." at time ".$row['app_time']."</p>";
                     $body .= "<p>Please Insure your availablity</p>";
                     $body .= "<p>Thanks</p>";
 

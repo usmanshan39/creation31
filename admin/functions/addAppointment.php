@@ -9,7 +9,8 @@ if($action == "addAppointment"){
     $mobile = $_POST['mobile'];
     $date = $_POST['date'];
     $time = $_POST['time'];
-    $sql = "INSERT INTO appointments (name  , email , mobile , app_date , app_time)VALUE('$name' , '$email' , '$mobile' , '$date' , '$time')";
+    $service_type = $_POST['service_type'];
+    $sql = "INSERT INTO appointments (name  , email , mobile , app_date , app_time , service_type)VALUE('$name' , '$email' , '$mobile' , '$date' , '$time' , '$service_type')";
     $result = mysqli_query($conn , $sql);
     if($result){
         $data = array("status"=> true , "message"=>"Successfully Create Appointment");

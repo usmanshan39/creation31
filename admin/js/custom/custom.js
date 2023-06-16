@@ -26,6 +26,7 @@ $(document).ready(function () {
                         '<td>' + rowData.mobile + '</td>' +
                         '<td>' + rowData.app_date + '</td>' +
                         '<td>' + rowData.app_time + '</td>' +
+                        '<td>' + rowData.service_type + '</td>' +
                         '<td>' + recordStatus + '</td>' +
                         '<td> <button class="m-1 btn btn-outline-success btn-sm complete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-check"></i></button>' +
                         '<button class="m-1 btn btn-outline-danger btn-sm cancel-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-times"></i></button>' +

@@ -23,6 +23,7 @@
                                             <th>Mobile</th>
                                             <th>Appointment&nbsp;Date</th>
                                             <th>Appointment&nbsp;Time</th>
+                                            <th>Service&nbsp;Type</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -35,6 +36,7 @@
                                             <th>Mobile</th>
                                             <th>Appointment&nbsp;Date</th>
                                             <th>Appointment&nbsp;Time</th>
+                                            <th>Service&nbsp;Type</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
