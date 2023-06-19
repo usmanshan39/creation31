@@ -81,7 +81,7 @@
 
 .home-about .right-sec {
     background-color: var(--bg-light);
-    padding: 70px;
+    padding: 55px;
 }
 
 .home-about.services .right-sec {
@@ -122,6 +122,7 @@
 .home-services .services-cards .card {
     border: none !important;
     box-shadow: 0 3px 16px 0px rgba(0, 0, 0, 0.12);
+    min-height: 508px;
 }
 
 ul.bullet-ul {
