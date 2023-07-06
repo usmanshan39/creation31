@@ -21,6 +21,27 @@ if($action == "addAppointment"){
     }
 }
 
+if($action == "apply-form"){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $mobile = $_POST['mobile'];
+    $cvFileName = $_FILES['cv']['name'];
+    $cvTmpName = $_FILES['cv']['tmp_name'];
+    $uploadDir = 'uploads/';
+    $cvPath = $uploadDir . $cvFileName;
+    move_uploaded_file($cvTmpName, $cvPath);
+    $sql = "INSERT INTO careers (name, email, mobile, resume) VALUES ('$name', '$email', '$mobile', '$cvPath')";
+
+    $result = mysqli_query($conn , $sql);
+    if($result){
+        $data = array("status"=> true , "message"=>"Application Submit Successfully!");
+        echo json_encode($data);
+    }else{
+        $data = array("status"=> false , "data"=>"Failed To Submit Application");
+        echo json_encode($data);
+    }
+}
+
 
 
 ?>
