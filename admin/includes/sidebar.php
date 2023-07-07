@@ -27,6 +27,11 @@
         <?php
     }
     ?>
+    <li class="nav-item">
+        <a class="nav-link" href="career.php">
+            <i class="fas fa-fw fa-address-book"></i>
+            <span>Application</span></a>
+    </li>
     <!-- <li class="nav-item">
         <a class="nav-link" href="tables.php">
             <i class="fas fa-fw fa-table"></i>

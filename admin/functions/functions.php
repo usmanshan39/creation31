@@ -373,6 +373,34 @@
 
     }
 
+
+    if($action == "fetchCareers"){
+        $sql = "SELECT * FROM careers";
+        $result = $conn->query($sql);
+        $data = array();
+        if ($result) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+            }
+        }
+    echo json_encode($data);
+    }
+    else if($action == "deleteCareer"){
+        $id  = $_POST['id'];
+        $sql = "DELETE FROM careers WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $data = array("status" => true, "message" => "Application Deleted Successfully");
+            echo json_encode($data);
+        }else{
+            $data = array("status" => false, "message" => "Failed To Delete Application");
+            echo json_encode($data);
+        }
+    }
+    
     else if ($action == "deleteUser"){
         $id  = $_POST['id'];
         $sql = "DELETE FROM users WHERE id = ?";

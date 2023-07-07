@@ -537,6 +537,77 @@ $(document).ready(function () {
         });
     })
 
+    function loadCareersTable() {
+        $.ajax({
+            url: "functions/functions.php",
+            type: "POST",
+            data: {
+                action: 'fetchCareers'
+            },
+            success: function (response) {
+                let tableData = JSON.parse(response);
+                let tableBody = $('#careersTable tbody');
+                tableBody.empty();
+                $.each(tableData, function (index, rowData) {
+                    let recordStatus;
+                    if(rowData.status == "Pending"){
+                        recordStatus = '<span class="badge badge-dark">Pending</span>';
+                    }else if(rowData.status == "Cancel"){
+                        recordStatus = '<span class="badge badge-danger">Cancel</span>';
+                    }else if(rowData.status == "Complete"){
+                        recordStatus = '<span class="badge badge-success">Complete</span>';
+                    }
+                    let rowHtml = '<tr>' +
+                        '<td>' + (index+1)  + '</td>' +
+                        '<td>' + rowData.name + '</td>' +
+                        '<td>' + rowData.email + '</td>' +
+                        '<td>' + rowData.mobile + '</td>' +
+                        '<td><a class="btn btn-info" href="functions/'+rowData.resume+'" target="_blank">View CV</a></td>' +
+                        '<td>' + rowData.updated_at + '</td>' +
+                        '<td><button class="m-1 btn btn-outline-danger btn-sm cancel-career-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
+                        '</td>' +
+                        '</tr>';
+                    tableBody.append(rowHtml);
+                });
+                $('#careersTable').DataTable();
+            },
+            error: function (data, status, error) {
+                console.log("Fetch Appointments error ", data);
+            }
+        });
+    }
+    loadCareersTable();
+    $(document).on('click', '.cancel-career-btn', function (e) {
+        e.preventDefault();
+        var recordId = $(this).data('record-id');
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete this Application?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteCareer" , id : recordId},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadCareersTable();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        });
+    })
 
     // login function
     $(document).on('submit', '#loginForm', function (e) {
