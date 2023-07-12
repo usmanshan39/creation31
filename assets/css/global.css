@@ -94,6 +94,12 @@
     color: var(--black-b);
     border: 1px solid var(--black-b);
 }
+.appt-btn:hover{
+    color: #fff;
+    background-color:#9e803b;
+    border: 1px solid #9e803b;
+    transition-duration: 0.3s;
+}
 .mt-sec{
     margin-top: 80px;
 }
