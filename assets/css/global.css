@@ -19,6 +19,14 @@
     font-size: 30px;
     font-weight: 400;
 }
+.simple-a{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Poppins;
+    color: var(--main-black);
+    text-transform: uppercase;
+    text-decoration: none;
+}
 
 .sec-head-b{
     color: var(--main-black);
