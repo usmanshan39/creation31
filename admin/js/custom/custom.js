@@ -34,6 +34,7 @@ $(document).ready(function () {
                         '<i class="fa fa-edit"></i>' +
                         '</button>' +
                         '<button class="m-1 btn btn-outline-dark btn-sm send-email-btn" data-record-id="' + rowData.id + '"><i class="fa fa-envelope"></i></button>'+
+                        '<button class="m-1 btn btn-outline-danger btn-sm delete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
                         '</td>' +
                         '</tr>';
                     tableBody.append(rowHtml);
@@ -215,7 +216,37 @@ $(document).ready(function () {
         });
     })
 
-
+    $(document).on('click', '.delete-appointment-btn', function (e) {
+        e.preventDefault();
+        var recordId = $(this).data('record-id');
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete this appointment?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteAppointment" , id : recordId},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadAppointments();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        });
+    })
     // blogs sections start
 
 

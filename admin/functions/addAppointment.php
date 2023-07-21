@@ -13,7 +13,7 @@ if($action == "addAppointment"){
     $sql = "INSERT INTO appointments (name  , email , mobile , app_date , app_time , service_type)VALUE('$name' , '$email' , '$mobile' , '$date' , '$time' , '$service_type')";
     $result = mysqli_query($conn , $sql);
     if($result){
-        $to = 'usmanshan339@gmail.com';
+        $to = 'booking@creation31.com';
         $subject = 'Appointment Booked against';
         $headers = "From: ".$email."\r\n";
         $headers .= "Reply-To: ".$email."\r\n";
@@ -61,7 +61,7 @@ else if($action == "addEmailSubscriber"){
     $sql = "INSERT INTO email_subscriber (email)VALUE('$email')";
     $result = mysqli_query($conn , $sql);
     if($result){
-        $to = 'usmanshan339@gmail.com';
+        $to = 'subscribe@creation31.com';
         $subject = 'Latest Updates Subscription';
         $headers = "From: info@creation.com\r\n";
         $headers .= "Reply-To: info@creation.com\r\n";

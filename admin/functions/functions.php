@@ -115,8 +115,8 @@
 
                     $to = $email;
                     $subject = 'Creation31 Appointment Reminder';
-                    $headers = "From: info@ygsalon.ae\r\n";
-                    $headers .= "Reply-To: info@ygsalon.ae\r\n";
+                    $headers = "From: booking@creation31.com\r\n";
+                    $headers .= "Reply-To: booking@creation31.com\r\n";
                     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
                     $body = "<h2>Hi ".$name."</h2>";
                     $body .= "<p>Your appointment for Creation31 is on data ".$row['app_date']." at time ".$row['app_time']."</p>";
@@ -126,9 +126,11 @@
 
                     // Send the email
                     if (mail($to, $subject, $body, $headers)) {
-                    echo "Thank you for your booking request! We will get back to you shortly.";
+                        $data = array("status"=> true , "message"=>"Email Send Successfully to ".$name."");
+                        echo json_encode($data);
                     } else {
-                    echo "There was an error sending your booking request. Please try again.";
+                        $data = array("status"=> false , "message"=>"There was an error sending your booking request. Please try again.");
+                        echo json_encode($data);
                     }
                 }
             }else{
@@ -141,7 +143,18 @@
         }
     }
 
-
+    else if($action == "deleteAppointment"){
+        $id = $_POST['id'];
+        $sql = "DELETE FROM appointments WHERE id = '$id'";
+        $result = mysqli_query($conn , $sql);
+        if($result){
+            $data = array("status"=> true , "message"=>"Appointment Deleted Successfully");
+            echo json_encode($data);
+        }else{
+            $data = array("status"=> false , "data"=>"Failed To Deleted the Appountment");
+            echo json_encode($data);
+        }
+    }
     // ******************* Blogs Sections *******************
 
     else if($action == "fetchAllBlogs"){
