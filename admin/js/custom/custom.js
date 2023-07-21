@@ -631,6 +631,76 @@ $(document).ready(function () {
             }
         })
     });
+
+    function loadSubscribers() {
+        selectedSubForDelete=[];
+        $("#btn-bulk-subs-delete").addClass('d-none');
+        $.ajax({
+            url: "functions/functions.php",
+            type: "POST",
+            data: {
+                action: 'fetchAllSubscribers'
+            },
+            success: function (response) {
+                let tableData = JSON.parse(response);
+                let tableBody = $('#subscriberTable tbody');
+                tableBody.empty();
+                $.each(tableData, function (index, rowData) {
+                    let checkboxId = 'checkbox_' + rowData.id;
+                    let userType;
+                    if(rowData.user_type == 'super'){
+                        userType = '<span class="badge badge-success">Super Admin</span>';
+                    }else if(rowData.user_type == 'admin'){
+                        userType = '<span class="badge badge-dark">Admin</span>';
+                    }
+                    let rowHtml = '<tr>' +
+                        '<td>' + (index+1) + '</td>' +
+                        '<td>'+ rowData.email +'</td>' +
+                        '<td><button class="btn btn-outline-danger mx-2 btn-sm delete-subscriber-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
+                        '</td>' +
+                        '</tr>';
+                    tableBody.append(rowHtml);
+                });
+                $('#subscriberTable').DataTable();
+            },
+            error: function (data, status, error) {
+                console.log("Fetch Appointments error ", data);
+            }
+        });
+    }
+    loadSubscribers();
+
+    $(document).on('click', '.delete-subscriber-btn', function (e) {
+        e.preventDefault();
+        var recordId = $(this).data('record-id');
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete this Subscriber?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteSubscriber" , id : recordId},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadSubscribers();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        });
+    })
     
 
 });

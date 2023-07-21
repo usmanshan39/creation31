@@ -414,5 +414,32 @@
             echo json_encode($data);
         }
     }
+    else if($action == "fetchAllSubscribers"){
+        $sql = "SELECT * FROM email_subscriber";
+        $result = $conn->query($sql);
+        $data = array();
+        if ($result) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $data[] = $row;
+                }
+            }
+        }
+        echo json_encode($data);
+    }
+
+    else if ($action == "deleteSubscriber"){
+        $id  = $_POST['id'];
+        $sql = "DELETE FROM email_subscriber WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            $data = array("status" => true, "message" => "Subscriber Deleted Successfully");
+            echo json_encode($data);
+        }else{
+            $data = array("status" => false, "message" => "Failed To Delete Subscriber");
+            echo json_encode($data);
+        }
+    }
 
 ?>
