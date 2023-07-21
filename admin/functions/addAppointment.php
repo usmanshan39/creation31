@@ -13,6 +13,21 @@ if($action == "addAppointment"){
     $sql = "INSERT INTO appointments (name  , email , mobile , app_date , app_time , service_type)VALUE('$name' , '$email' , '$mobile' , '$date' , '$time' , '$service_type')";
     $result = mysqli_query($conn , $sql);
     if($result){
+        $to = 'usmanshan339@gmail.com';
+        $subject = 'Appointment Booked against';
+        $headers = "From: ".$email."\r\n";
+        $headers .= "Reply-To: ".$email."\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $body = "<h2>".$name." Book an Appointment for ".$service_type. "</h2>";
+        $body .= "<p>Here is the details of appointment</p>";
+        $body .= "<p>Name: ".$name."</p>";
+        $body .= "<p>Email: ".$email."</p>";
+        $body .= "<p>Mobile: ".$mobile."</p>";
+        $body .= "<p>On Date: ".$date." And Time is ".$time."</p>";
+        $body .= "<p>Service: ".$service_type."</p>";
+        $body .= "<p>Thanks</p>";
+
+        mail($to, $subject, $body, $headers);
         $data = array("status"=> true , "message"=>"Successfully Create Appointment");
         echo json_encode($data);
     }else{
@@ -46,6 +61,15 @@ else if($action == "addEmailSubscriber"){
     $sql = "INSERT INTO email_subscriber (email)VALUE('$email')";
     $result = mysqli_query($conn , $sql);
     if($result){
+        $to = 'usmanshan339@gmail.com';
+        $subject = 'Latest Updates Subscription';
+        $headers = "From: info@creation.com\r\n";
+        $headers .= "Reply-To: info@creation.com\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $body = "<h2>User with Email ".$email." Suscribe Latest Updates.</h2>";
+        $body .= "<p>Thanks</p>";
+
+    mail($to, $subject, $body, $headers);
         $data = array("status"=> true , "message"=>"Thanks for Subscribe Our Newsletter");
         echo json_encode($data);
     }else{
