@@ -455,4 +455,101 @@
         }
     }
 
+    else if($action == "deleteMultipleAppointment"){
+        $id = $_POST['ids'];
+        $array = json_decode($id, true);
+       
+        $allDeleted = true;
+        foreach ($array as $id) {
+            $id = $conn->real_escape_string($id);
+            $sql = "DELETE FROM appointments WHERE id = '$id'";
+            if ($conn->query($sql) !== TRUE) {
+              $allDeleted = false;
+              $data = array("status"=> false , "data"=>"Failed To Deleted the Appountments");
+              echo json_encode($data);
+            }
+          }
+          if ($allDeleted) {
+            $data = array("status"=> true , "message"=>"Appointments Deleted Successfully");
+            echo json_encode($data);
+          }
+    }
+    else if($action == "deleteMultipleBlogs"){
+        $id = $_POST['ids'];
+        $array = json_decode($id, true);
+       
+        $allDeleted = true;
+        foreach ($array as $id) {
+            $id = $conn->real_escape_string($id);
+            $sql = "DELETE FROM our_blogs WHERE id = '$id'";
+            if ($conn->query($sql) !== TRUE) {
+              $allDeleted = false;
+              $data = array("status"=> false , "data"=>"Failed To Deleted the Blogs");
+              echo json_encode($data);
+            }
+          }
+          if ($allDeleted) {
+            $data = array("status"=> true , "message"=>"Blogs Deleted Successfully");
+            echo json_encode($data);
+          }
+    }
+    else if($action == "deleteMultipleUsers"){
+        $id = $_POST['ids'];
+        $array = json_decode($id, true);
+       
+        $allDeleted = true;
+        foreach ($array as $id) {
+            $id = $conn->real_escape_string($id);
+            $sql = "DELETE FROM users WHERE id = '$id'";
+            if ($conn->query($sql) !== TRUE) {
+              $allDeleted = false;
+              $data = array("status"=> false , "data"=>"Failed To Deleted the Users");
+              echo json_encode($data);
+            }
+          }
+          if ($allDeleted) {
+            $data = array("status"=> true , "message"=>"Users Deleted Successfully");
+            echo json_encode($data);
+          }
+    }
+    else if($action == "deleteMultipleSubs"){
+        $id = $_POST['ids'];
+        $array = json_decode($id, true);
+       
+        $allDeleted = true;
+        foreach ($array as $id) {
+            $id = $conn->real_escape_string($id);
+            $sql = "DELETE FROM email_subscriber WHERE id = '$id'";
+            if ($conn->query($sql) !== TRUE) {
+              $allDeleted = false;
+              $data = array("status"=> false , "data"=>"Failed To Deleted the Subscribers");
+              echo json_encode($data);
+            }
+          }
+          if ($allDeleted) {
+            $data = array("status"=> true , "message"=>"Subscribers Deleted Successfully");
+            echo json_encode($data);
+          }
+    }
+    else if($action == "deleteMultipleCar"){
+        $id = $_POST['ids'];
+        $array = json_decode($id, true);
+       
+        $allDeleted = true;
+        foreach ($array as $id) {
+            $id = $conn->real_escape_string($id);
+            $sql = "DELETE FROM careers WHERE id = '$id'";
+            if ($conn->query($sql) !== TRUE) {
+              $allDeleted = false;
+              $data = array("status"=> false , "data"=>"Failed To Deleted the Subscribers");
+              echo json_encode($data);
+            }
+          }
+          if ($allDeleted) {
+            $data = array("status"=> true , "message"=>"Subscribers Deleted Successfully");
+            echo json_encode($data);
+          }
+    }
+
+
 ?>

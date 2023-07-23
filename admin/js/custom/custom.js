@@ -1,5 +1,17 @@
 $(document).ready(function () {
+    var selectedAppForDelete = [];
+    var selectedBlogsForDelete = [];
+    var selectedUserForDelete = [];
+    var selectedSubForDelete = [];
+    var selectedCarForDelete = [];
+    var allAppointmentsData=[];
+    var filteredAppointmentsData=[];
+
+
+
     function loadAppointments() {
+        selectedAppForDelete=[];
+        $("#btn-bulk-app-delete").addClass('d-none');
         $.ajax({
             url: "functions/functions.php",
             type: "POST",
@@ -8,38 +20,8 @@ $(document).ready(function () {
             },
             success: function (response) {
                 let tableData = JSON.parse(response);
-                let tableBody = $('#appointmentTable tbody');
-                tableBody.empty();
-                $.each(tableData, function (index, rowData) {
-                    let recordStatus;
-                    if(rowData.status == "Pending"){
-                        recordStatus = '<span class="badge badge-dark">Pending</span>';
-                    }else if(rowData.status == "Cancel"){
-                        recordStatus = '<span class="badge badge-danger">Cancel</span>';
-                    }else if(rowData.status == "Complete"){
-                        recordStatus = '<span class="badge badge-success">Complete</span>';
-                    }
-                    let rowHtml = '<tr>' +
-                        '<td>' + (index+1)  + '</td>' +
-                        '<td>' + rowData.name + '</td>' +
-                        '<td>' + rowData.email + '</td>' +
-                        '<td>' + rowData.mobile + '</td>' +
-                        '<td>' + rowData.app_date + '</td>' +
-                        '<td>' + rowData.app_time + '</td>' +
-                        '<td>' + rowData.service_type + '</td>' +
-                        '<td>' + recordStatus + '</td>' +
-                        '<td> <button class="m-1 btn btn-outline-success btn-sm complete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-check"></i></button>' +
-                        '<button class="m-1 btn btn-outline-danger btn-sm cancel-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-times"></i></button>' +
-                        '<button class="m-1 btn btn-outline-primary btn-sm edit-appointment-btn" data-record-id="' + rowData.id + '" data-toggle="modal" data-target="#editAppointmentModal">' +
-                        '<i class="fa fa-edit"></i>' +
-                        '</button>' +
-                        '<button class="m-1 btn btn-outline-dark btn-sm send-email-btn" data-record-id="' + rowData.id + '"><i class="fa fa-envelope"></i></button>'+
-                        '<button class="m-1 btn btn-outline-danger btn-sm delete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
-                        '</td>' +
-                        '</tr>';
-                    tableBody.append(rowHtml);
-                });
-                $('#appointmentTable').DataTable();
+                allAppointmentsData = JSON.parse(response);
+                loadAppointmentsTable(allAppointmentsData);
             },
             error: function (data, status, error) {
                 console.log("Fetch Appointments error ", data);
@@ -47,6 +29,56 @@ $(document).ready(function () {
         });
     }
     loadAppointments();
+    function loadAppointmentsTable(tableData) {
+        let tableBody = $('#appointmentTable tbody');
+        tableBody.empty();
+        $.each(tableData, function (index, rowData) {
+            let checkboxId = 'checkbox_' + rowData.id;
+            let recordStatus;
+            if (rowData.status == "Pending") {
+                recordStatus = '<span class="badge badge-dark">Pending</span>';
+            } else if (rowData.status == "Cancel") {
+                recordStatus = '<span class="badge badge-danger">Cancel</span>';
+            } else if (rowData.status == "Complete") {
+                recordStatus = '<span class="badge badge-success">Complete</span>';
+            }
+            let rowHtml = '<tr>' +
+                '<td><input type="checkbox" id="' + checkboxId + '"> ' + (index + 1) + '</td>' +
+                '<td>' + rowData.name + '</td>' +
+                '<td>' + rowData.email + '</td>' +
+                '<td>' + rowData.mobile + '</td>' +
+                '<td>' + rowData.app_date + '</td>' +
+                '<td>' + rowData.app_time + '</td>' +
+                '<td>' + recordStatus + '</td>' +
+                '<td> <button class="m-1 btn btn-outline-success btn-sm complete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-check"></i></button>' +
+                '<button class="m-1 btn btn-outline-warning btn-sm cancel-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-times"></i></button>' +
+                '<button class="m-1 btn btn-outline-primary btn-sm edit-appointment-btn" data-record-id="' + rowData.id + '" data-toggle="modal" data-target="#editAppointmentModal">' +
+                '<i class="fa fa-edit"></i>' +
+                '</button>' +
+                '<button class="m-1 btn btn-outline-dark btn-sm send-email-btn" data-record-id="' + rowData.id + '"><i class="fa fa-envelope"></i></button>' +
+                '<button class="m-1 btn btn-outline-danger btn-sm delete-appointment-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
+                '</td>' +
+                '</tr>';
+            tableBody.append(rowHtml);
+            $('#' + checkboxId).change(function () {
+                if (this.checked) {
+                    selectedAppForDelete.push(rowData.id);
+                } else {
+                    let index = selectedAppForDelete.indexOf(rowData.id);
+                    if (index > -1) {
+                        selectedAppForDelete.splice(index, 1);
+                    }
+                }
+                if (selectedAppForDelete.length > 0) {
+                    $("#btn-bulk-app-delete").removeClass('d-none');
+                } else {
+                    $("#btn-bulk-app-delete").addClass('d-none');
+                }
+                console.log("selectedAppForDelete", selectedAppForDelete);
+            });
+        });
+        $('#appointmentTable').DataTable();
+    }
 
     $(document).on('submit', '#addAppointmentForm', function (e) {
         e.preventDefault();
@@ -183,6 +215,131 @@ $(document).ready(function () {
         });
     })
 
+    $(document).on('click', '.delete-appointment-btn', function (e) {
+        e.preventDefault();
+        var recordId = $(this).data('record-id');
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete this appointment?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteAppointment" , id : recordId},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadAppointments();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        });
+    })
+
+    // appointments filers
+    $(document).on('click' , '#filterAStautsBtn' , function(e){
+        e.preventDefault();
+        var filterStatusValue = $('#filterStatus').val();
+        if(!filterStatusValue || filterStatusValue == ''){
+            swalAlert('Error!', 'error', "Please Enter Valid Status");
+        }else{
+            debugger
+            if(filteredAppointmentsData.length > 0 ){
+                filteredAppointmentsData = filteredAppointmentsData.filter(el => filterStatusValue.toLowerCase() === el.status.toLowerCase());
+                loadAppointmentsTable(filteredAppointmentsData);
+            }else{
+                filteredAppointmentsData = allAppointmentsData.filter(el => filterStatusValue.toLowerCase() === el.status.toLowerCase());
+                loadAppointmentsTable(filteredAppointmentsData);
+            }
+        }
+    })
+    $(document).on('click' , '#filterADatebtn' , function(e){
+        e.preventDefault();
+        var filterStatusValue = $('#filterDate').val();
+        if(!filterStatusValue || filterStatusValue == ''){
+            swalAlert('Error!', 'error', "Please Enter Valid Status");
+        }else{
+            debugger
+
+            if(filteredAppointmentsData.length > 0 ){
+                filteredAppointmentsData = filteredAppointmentsData.filter(el => filterStatusValue === el.app_date);
+                loadAppointmentsTable(filteredAppointmentsData);
+            }else{
+                filteredAppointmentsData = allAppointmentsData.filter(el => filterStatusValue === el.app_date);
+                loadAppointmentsTable(filteredAppointmentsData);
+            }
+        }
+    })
+    $(document).on('click' , '#filterATimebtn' , function(e){
+        e.preventDefault();
+        var filterStatusValue = $('#filterTime').val();
+        if(!filterStatusValue || filterStatusValue == ''){
+            swalAlert('Error!', 'error', "Please Enter Valid Status");
+        }else{
+            debugger
+
+            if(filteredAppointmentsData.length > 0 ){
+                filteredAppointmentsData = filteredAppointmentsData.filter(el => filterStatusValue === el.app_time);
+                loadAppointmentsTable(filteredAppointmentsData);
+            }else{
+                filteredAppointmentsData = allAppointmentsData.filter(el => filterStatusValue === el.app_time);
+                loadAppointmentsTable(filteredAppointmentsData);
+            }
+        }
+    })
+    $(document).on('click' , '#filterResetBtn' , function(e){
+        e.preventDefault();
+        $('#filterStatus').val('');
+        $('#filterDate').val('');
+        $('#filterTime').val('');
+        filteredAppointmentsData =[];
+        loadAppointmentsTable(allAppointmentsData);
+    })
+
+    $(document).on('click' , '#btn-bulk-app-delete' , function(e){
+        e.preventDefault();
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete all these appointment?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let sendArr = selectedAppForDelete.map(el=> parseInt(el));
+                console.log("sendArr", sendArr);
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteMultipleAppointment" , ids : JSON.stringify(sendArr)},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadAppointments();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        })
+    })
+
     $(document).on('click', '.send-email-btn', function (e) {
         e.preventDefault();
         var recordId = $(this).data('record-id');
@@ -216,41 +373,13 @@ $(document).ready(function () {
         });
     })
 
-    $(document).on('click', '.delete-appointment-btn', function (e) {
-        e.preventDefault();
-        var recordId = $(this).data('record-id');
-        Swal.fire({
-            title: 'Confirm',
-            text: 'Are you sure you want to Delete this appointment?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "functions/functions.php",
-                    type: "POST",
-                    data: {action : "deleteAppointment" , id : recordId},
-                    success: function (response) {
-                        let result = JSON.parse(response);
-                        if (result.status) {
-                            swalAlert('Success!', 'success', result.message);
-                            loadAppointments();
-                        } else {
-                            swalAlert('Success!', 'error', result.message);
-                        }
-                    }
-                })
-            }
-        });
-    })
+
     // blogs sections start
 
 
     function loadBlogs() {
+        selectedBlogsForDelete=[];
+        $("#btn-bulk-blogs-delete").addClass('d-none');
         $.ajax({
             url: "functions/functions.php",
             type: "POST",
@@ -263,13 +392,14 @@ $(document).ready(function () {
                 tableBody.empty();
                 $.each(tableData, function (index, rowData) {
                     let recordStatus;
+                    let checkboxId = 'checkbox_' + rowData.id;
                     if(rowData.published == 1){
                         recordStatus = '<span class="badge badge-success">Published</span>';
                     }else{
                         recordStatus = '<span class="badge badge-dark">Pending</span>';
                     }
                     let rowHtml = '<tr>' +
-                        '<td>' + (index+1) + '</td>' +
+                        '<td><input type="checkbox" id="' + checkboxId + '"> ' + (index+1) + '</td>' +
                         '<td>' + rowData.title + '</td>' +
                         '<td> <img src="./uploads/'+rowData.blog_image+'" width="100px"> </td>' +
                         '<td>' + rowData.blog_desc + '</td>' +
@@ -281,6 +411,22 @@ $(document).ready(function () {
                         '</td>' +
                         '</tr>';
                     tableBody.append(rowHtml);
+                    $('#' + checkboxId).change(function () {
+                        if (this.checked) {
+                          selectedBlogsForDelete.push(rowData.id);
+                        } else {
+                          let index = selectedBlogsForDelete.indexOf(rowData.id);
+                          if (index > -1) {
+                            selectedBlogsForDelete.splice(index, 1);
+                          }
+                        }
+                        if(selectedBlogsForDelete.length>0){
+                            $("#btn-bulk-blogs-delete").removeClass('d-none');
+                        }else{
+                            $("#btn-bulk-blogs-delete").addClass('d-none');
+                        }
+                        console.log("selectedBlogsForDelete" , selectedBlogsForDelete);
+                      });
                 });
                 $('#blogsTable').DataTable();
             },
@@ -406,6 +552,38 @@ $(document).ready(function () {
             }
         });
     })
+    $(document).on('click' , '#btn-bulk-blogs-delete' , function(e){
+        e.preventDefault();
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete all these Blogs?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let sendArr = selectedBlogsForDelete.map(el=> parseInt(el));
+                console.log("sendArr", sendArr);
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteMultipleBlogs" , ids : JSON.stringify(sendArr)},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadBlogs();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        })
+    })
 
     function swalAlert(title, icon, text) {
         Swal.fire({
@@ -420,6 +598,8 @@ $(document).ready(function () {
     // users section
 
     function loadUsers() {
+        selectedUserForDelete=[];
+        $("#btn-bulk-user-delete").addClass('d-none');
         $.ajax({
             url: "functions/functions.php",
             type: "POST",
@@ -431,7 +611,8 @@ $(document).ready(function () {
                 let tableBody = $('#usersTable tbody');
                 tableBody.empty();
                 $.each(tableData, function (index, rowData) {
-                    console.log("rowData" , rowData);
+                    
+                    let checkboxId = 'checkbox_' + rowData.id;
                     let userType;
                     if(rowData.user_type == 'super'){
                         userType = '<span class="badge badge-success">Super Admin</span>';
@@ -439,7 +620,7 @@ $(document).ready(function () {
                         userType = '<span class="badge badge-dark">Admin</span>';
                     }
                     let rowHtml = '<tr>' +
-                        '<td>' + (index+1) + '</td>' +
+                        '<td><input type="checkbox" id="' + checkboxId + '"> ' + (index+1) + '</td>' +
                         '<td>' + rowData.user_name + '</td>' +
                         '<td>'+ rowData.user_email +'</td>' +
                         '<td>*****</td>' +
@@ -451,6 +632,21 @@ $(document).ready(function () {
                         '</td>' +
                         '</tr>';
                     tableBody.append(rowHtml);
+                    $('#' + checkboxId).change(function () {
+                        if (this.checked) {
+                          selectedUserForDelete.push(rowData.id);
+                        } else {
+                          let index = selectedUserForDelete.indexOf(rowData.id);
+                          if (index > -1) {
+                            selectedUserForDelete.splice(index, 1);
+                          }
+                        }
+                        if(selectedUserForDelete.length>0){
+                            $("#btn-bulk-user-delete").removeClass('d-none');
+                        }else{
+                            $("#btn-bulk-user-delete").addClass('d-none');
+                        }
+                      });
                 });
                 $('#usersTable').DataTable();
             },
@@ -568,52 +764,11 @@ $(document).ready(function () {
         });
     })
 
-    function loadCareersTable() {
-        $.ajax({
-            url: "functions/functions.php",
-            type: "POST",
-            data: {
-                action: 'fetchCareers'
-            },
-            success: function (response) {
-                let tableData = JSON.parse(response);
-                let tableBody = $('#careersTable tbody');
-                tableBody.empty();
-                $.each(tableData, function (index, rowData) {
-                    let recordStatus;
-                    if(rowData.status == "Pending"){
-                        recordStatus = '<span class="badge badge-dark">Pending</span>';
-                    }else if(rowData.status == "Cancel"){
-                        recordStatus = '<span class="badge badge-danger">Cancel</span>';
-                    }else if(rowData.status == "Complete"){
-                        recordStatus = '<span class="badge badge-success">Complete</span>';
-                    }
-                    let rowHtml = '<tr>' +
-                        '<td>' + (index+1)  + '</td>' +
-                        '<td>' + rowData.name + '</td>' +
-                        '<td>' + rowData.email + '</td>' +
-                        '<td>' + rowData.mobile + '</td>' +
-                        '<td><a class="btn btn-info" href="functions/'+rowData.resume+'" target="_blank">View CV</a></td>' +
-                        '<td>' + rowData.updated_at + '</td>' +
-                        '<td><button class="m-1 btn btn-outline-danger btn-sm cancel-career-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
-                        '</td>' +
-                        '</tr>';
-                    tableBody.append(rowHtml);
-                });
-                $('#careersTable').DataTable();
-            },
-            error: function (data, status, error) {
-                console.log("Fetch Appointments error ", data);
-            }
-        });
-    }
-    loadCareersTable();
-    $(document).on('click', '.cancel-career-btn', function (e) {
+    $(document).on('click' , '#btn-bulk-user-delete' , function(e){
         e.preventDefault();
-        var recordId = $(this).data('record-id');
         Swal.fire({
             title: 'Confirm',
-            text: 'Are you sure you want to Delete this Application?',
+            text: 'Are you sure you want to Delete all these Users?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -622,23 +777,26 @@ $(document).ready(function () {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
+                let sendArr = selectedUserForDelete.map(el=> parseInt(el));
+                console.log("sendArr", sendArr);
                 $.ajax({
                     url: "functions/functions.php",
                     type: "POST",
-                    data: {action : "deleteCareer" , id : recordId},
+                    data: {action : "deleteMultipleUsers" , ids : JSON.stringify(sendArr)},
                     success: function (response) {
                         let result = JSON.parse(response);
                         if (result.status) {
                             swalAlert('Success!', 'success', result.message);
-                            loadCareersTable();
+                            loadUsers();
                         } else {
                             swalAlert('Success!', 'error', result.message);
                         }
                     }
                 })
             }
-        });
+        })
     })
+
 
     // login function
     $(document).on('submit', '#loginForm', function (e) {
@@ -653,7 +811,6 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 let result = JSON.parse(response);
-                console.log("result " , result);
                 if (result.status) {
                     window.location.href = './index.php';
                 } else {
@@ -662,6 +819,7 @@ $(document).ready(function () {
             }
         })
     });
+    
 
     function loadSubscribers() {
         selectedSubForDelete=[];
@@ -685,12 +843,27 @@ $(document).ready(function () {
                         userType = '<span class="badge badge-dark">Admin</span>';
                     }
                     let rowHtml = '<tr>' +
-                        '<td>' + (index+1) + '</td>' +
+                        '<td><input type="checkbox" id="' + checkboxId + '"> ' + (index+1) + '</td>' +
                         '<td>'+ rowData.email +'</td>' +
                         '<td><button class="btn btn-outline-danger mx-2 btn-sm delete-subscriber-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
                         '</td>' +
                         '</tr>';
                     tableBody.append(rowHtml);
+                    $('#' + checkboxId).change(function () {
+                        if (this.checked) {
+                          selectedSubForDelete.push(rowData.id);
+                        } else {
+                          let index = selectedSubForDelete.indexOf(rowData.id);
+                          if (index > -1) {
+                            selectedSubForDelete.splice(index, 1);
+                          }
+                        }
+                        if(selectedSubForDelete.length>0){
+                            $("#btn-bulk-subs-delete").removeClass('d-none');
+                        }else{
+                            $("#btn-bulk-subs-delete").addClass('d-none');
+                        }
+                      });
                 });
                 $('#subscriberTable').DataTable();
             },
@@ -732,6 +905,158 @@ $(document).ready(function () {
             }
         });
     })
-    
+    $(document).on('click' , '#btn-bulk-subs-delete' , function(e){
+        e.preventDefault();
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete all these Subscribers?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let sendArr = selectedSubForDelete.map(el=> parseInt(el));
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteMultipleSubs" , ids : JSON.stringify(sendArr)},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadSubscribers();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        })
+    })
+
+    function loadCareersTable() {
+        selectedCarForDelete = [];
+        $.ajax({
+            url: "functions/functions.php",
+            type: "POST",
+            data: {
+                action: 'fetchCareers'
+            },
+            success: function (response) {
+                let tableData = JSON.parse(response);
+                let tableBody = $('#careersTable tbody');
+                tableBody.empty();
+                $.each(tableData, function (index, rowData) {
+                    let checkboxId = 'checkbox_' + rowData.id;
+                    let recordStatus;
+                    if(rowData.status == "Pending"){
+                        recordStatus = '<span class="badge badge-dark">Pending</span>';
+                    }else if(rowData.status == "Cancel"){
+                        recordStatus = '<span class="badge badge-danger">Cancel</span>';
+                    }else if(rowData.status == "Complete"){
+                        recordStatus = '<span class="badge badge-success">Complete</span>';
+                    }
+                    let rowHtml = '<tr>' +
+                        '<td><input type="checkbox" id="' + checkboxId + '"> ' + (index+1)  + '</td>' +
+                        '<td>' + rowData.name + '</td>' +
+                        '<td>' + rowData.email + '</td>' +
+                        '<td>' + rowData.mobile + '</td>' +
+                        '<td><a class="btn btn-info" href="functions/'+rowData.resume+'" target="_blank">View CV</a></td>' +
+                        '<td>' + rowData.updated_at + '</td>' +
+                        '<td><button class="m-1 btn btn-outline-danger btn-sm cancel-career-btn" data-record-id="' + rowData.id + '"><i class="fa fa-trash"></i></button>' +
+                        '</td>' +
+                        '</tr>';
+                    tableBody.append(rowHtml);
+                    $('#' + checkboxId).change(function () {
+                        if (this.checked) {
+                          selectedCarForDelete.push(rowData.id);
+                        } else {
+                          let index = selectedCarForDelete.indexOf(rowData.id);
+                          if (index > -1) {
+                            selectedCarForDelete.splice(index, 1);
+                          }
+                        }
+                        if(selectedCarForDelete.length>0){
+                            $("#btn-bulk-career-delete").removeClass('d-none');
+                        }else{
+                            $("#btn-bulk-career-delete").addClass('d-none');
+                        }
+                      });
+                });
+                $('#careersTable').DataTable();
+            },
+            error: function (data, status, error) {
+                console.log("Fetch Appointments error ", data);
+            }
+        });
+    }
+    loadCareersTable();
+    $(document).on('click', '.cancel-career-btn', function (e) {
+        e.preventDefault();
+        var recordId = $(this).data('record-id');
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete this Application?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteCareer" , id : recordId},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadCareersTable();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+    $(document).on('click' , '#btn-bulk-career-delete' , function(e){
+        e.preventDefault();
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to Delete all these Subscribers?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let sendArr = selectedCarForDelete.map(el=> parseInt(el));
+                console.log("sendArr", sendArr);
+                $.ajax({
+                    url: "functions/functions.php",
+                    type: "POST",
+                    data: {action : "deleteMultipleCar" , ids : JSON.stringify(sendArr)},
+                    success: function (response) {
+                        let result = JSON.parse(response);
+                        if (result.status) {
+                            swalAlert('Success!', 'success', result.message);
+                            loadCareersTable();
+                        } else {
+                            swalAlert('Success!', 'error', result.message);
+                        }
+                    }
+                })
+            }
+        })
+    })
 
 });
