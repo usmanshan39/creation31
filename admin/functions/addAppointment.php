@@ -3,6 +3,18 @@
 require_once("./config.php");
 $action = $_POST['action'];
 
+function sendEmailToClient($to){
+    $to = $to;
+    $subject = 'Thank you for the booking.';
+    $headers = "From: booking@creation31.com\r\n";
+    $headers .= "Reply-To: booking@creation31.com\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    $body = "<p>Thank you for the booking.</p>";
+    $body .= "<p>Our Team will contact you Soon!</p>";
+
+    mail($to, $subject, $body, $headers);
+};
+
 if($action == "addAppointment"){
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -18,17 +30,17 @@ if($action == "addAppointment"){
         $headers = "From: ".$email."\r\n";
         $headers .= "Reply-To: ".$email."\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        // $body = "<h2>".$name." Book an Appointment for ".$service_type. "</h2>";
-        $body .= "<p>Thank you for the booking.</p>";
-        $body .= "<p>Our Team will contact you Soon!</p>";
-        // $body .= "<p>Name: ".$name."</p>";
-        // $body .= "<p>Email: ".$email."</p>";
-        // $body .= "<p>Mobile: ".$mobile."</p>";
-        // $body .= "<p>On Date: ".$date." And Time is ".$time."</p>";
-        // $body .= "<p>Service: ".$service_type."</p>";
-        // $body .= "<p>Thanks</p>";
+        $body = "<h2>".$name." Book an Appointment for ".$service_type. "</h2>";
+        $body .= "<p>Here is the details of appointment</p>";
+        $body .= "<p>Name: ".$name."</p>";
+        $body .= "<p>Email: ".$email."</p>";
+        $body .= "<p>Mobile: ".$mobile."</p>";
+        $body .= "<p>On Date: ".$date." And Time is ".$time."</p>";
+        $body .= "<p>Service: ".$service_type."</p>";
+        $body .= "<p>Thanks</p>";
 
         mail($to, $subject, $body, $headers);
+        sendEmailToClient($email);
         $data = array("status"=> true , "message"=>"Successfully Create Appointment");
         echo json_encode($data);
     }else{
